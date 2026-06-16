@@ -1,0 +1,2 @@
+# This directory holds the generated commit files.
+# It is tracked so git has a writable location for backdated commits.

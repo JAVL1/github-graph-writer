@@ -1,0 +1,68 @@
+name: ✍️ Write on Contribution Graph
+
+on:
+  # Trigger manually from the GitHub Actions UI (Actions tab → this workflow → Run workflow)
+  workflow_dispatch:
+    inputs:
+      text:
+        description: 'Word or message to write (A-Z, 0-3, space, ! .)'
+        required: true
+        default: 'HELLO'
+      year:
+        description: 'Year to write in (must be within your last ~52 weeks of graph)'
+        required: true
+        default: '2024'
+      week_offset:
+        description: 'Blank weeks before the text starts (2 = leave a small margin)'
+        required: false
+        default: '2'
+      intensity:
+        description: 'Commit intensity per pixel: 1=light 2=medium 3=dark 4=darkest'
+        required: false
+        default: '4'
+
+jobs:
+  write-graph:
+    name: Generate contribution art
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # needed to push commits back to the repo
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history so backdated commits don't conflict
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Preview (dry-run) the art
+        run: |
+          python scripts/generate_commits.py \
+            --text    "${{ github.event.inputs.text }}" \
+            --year    "${{ github.event.inputs.year }}" \
+            --week-offset "${{ github.event.inputs.week_offset }}" \
+            --intensity   "${{ github.event.inputs.intensity }}" \
+            --dry-run
+
+      - name: Generate backdated commits
+        run: |
+          python scripts/generate_commits.py \
+            --text    "${{ github.event.inputs.text }}" \
+            --year    "${{ github.event.inputs.year }}" \
+            --week-offset "${{ github.event.inputs.week_offset }}" \
+            --intensity   "${{ github.event.inputs.intensity }}"
+
+      - name: Push commits to remote
+        run: |
+          git push origin HEAD:${{ github.ref_name }}
