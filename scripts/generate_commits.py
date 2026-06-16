@@ -84,14 +84,15 @@ def make_commit(commit_date: date, intensity: int, message: str, dry_run: bool):
 
     for i in range(intensity):
         # Write a tiny file to have something to commit
-        filepath = os.path.join("output", f"commit_{commit_date}_{i}.txt")
+        filepath = os.path.join("output", f"commit_{commit_date}_{i}_{message.replace(' ','_')}.txt")
         if not dry_run:
             with open(filepath, "w") as f:
-                f.write(f"{message} — {commit_date} #{i+1}\n")
-
+                import time
+                f.write(f"{message} — {commit_date} #{i+1} — {time.time()}\n")
+        
             subprocess.run(["git", "add", filepath], check=True)
             subprocess.run(
-                ["git", "commit", "--allow-empty", "-m", f"[graph] {message} {commit_date} {i+1}"],
+                ["git", "commit", "-m", f"[graph] {message} {commit_date} {i+1}"],
                 env=env,
                 check=True,
             )
