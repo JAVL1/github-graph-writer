@@ -2,7 +2,7 @@
 
 > Write words and messages on your GitHub contribution graph using backdated commits.
 
-![example showing HELLO written on a contribution graph](https://img.shields.io/badge/status-ready_to_draw-brightgreen)
+![status](https://img.shields.io/badge/status-WIP-yellow)
 
 ---
 
