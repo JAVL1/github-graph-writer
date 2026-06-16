@@ -13,7 +13,7 @@ Darker cells = more commits on that day.
 
 This tool calculates which specific **past dates** correspond to each pixel of your message (using a 5×7 pixel font), then creates commits on those dates using `git commit --date`.
 
-
+![HI WORLD on the GitHub contribution graph](hi_world_preview.png)
 
 ## Quick start (GitHub Actions — no local setup needed)
 
