@@ -43,8 +43,8 @@ jobs:
 
       - name: Configure git identity
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name  "JAVL1"
+          git config user.email "jvar.cdn@gmail.com"
 
       - name: Preview (dry-run) the art
         run: |
