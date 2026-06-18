@@ -35,18 +35,18 @@ jobs:
           git config user.name  "JAVL1"
           git config user.email "jvar.cdn@gmail.com"
 
-      - name: Remove commits for selected year
+      - name: Install git-filter-repo
+        run: pip install git-filter-repo
+
+      - name: Clear commits for selected year
         run: |
           if [ "${{ github.event.inputs.year }}" = "ALL" ]; then
-            git filter-branch --force --index-filter \
-              "git rm -rf --cached --ignore-unmatch output/" \
-              --prune-empty --tag-name-filter cat -- --all
+            git filter-repo --path output/ --invert-paths --force
           else
-            git filter-branch --force --index-filter \
-              "git rm -rf --cached --ignore-unmatch output/*${{ github.event.inputs.year }}*.txt" \
-              --prune-empty --tag-name-filter cat -- --all
+            git filter-repo --path-glob "output/*${{ github.event.inputs.year }}*.txt" --invert-paths --force
           fi
 
       - name: Force push rewritten history
         run: |
-          git push origin HEAD:main --force
+          git remote add origin-push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin-push HEAD:main --force
