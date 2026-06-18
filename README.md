@@ -77,6 +77,17 @@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 - **Intensity levels**: level `4` shows the darkest green. Use `1`–`2` for a lighter look, or mix runs to create gradient effects.
 
 ---
+## Clearing your contribution art
+
+To remove existing art from the graph, go to **Actions** tab → **🗑️ Clear Contribution Art** → **Run workflow** and fill in:
+
+- **year** — the year you want to clear (e.g. `2024`), or type `ALL` to wipe everything
+- **confirm** — type `YES` to confirm
+
+This will delete all generated commits for that year so you can draw something new.
+
+You can also delete the whole repository
+
 
 ## Contributing
 
