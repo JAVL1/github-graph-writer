@@ -35,16 +35,18 @@ jobs:
           git config user.name  "JAVL1"
           git config user.email "jvar.cdn@gmail.com"
 
-      - name: Delete output files for selected year
+      - name: Remove commits for selected year
         run: |
           if [ "${{ github.event.inputs.year }}" = "ALL" ]; then
-            git rm -f output/*.txt || echo "No files to remove"
+            git filter-branch --force --index-filter \
+              "git rm -rf --cached --ignore-unmatch output/" \
+              --prune-empty --tag-name-filter cat -- --all
           else
-            git rm -f output/*${{ github.event.inputs.year }}*.txt || echo "No files for that year"
+            git filter-branch --force --index-filter \
+              "git rm -rf --cached --ignore-unmatch output/*${{ github.event.inputs.year }}*.txt" \
+              --prune-empty --tag-name-filter cat -- --all
           fi
-          git commit -m "🗑️ Clear contribution art (${{ github.event.inputs.year }})" || echo "Nothing to commit"
 
-      - name: Push changes
+      - name: Force push rewritten history
         run: |
-          git pull --rebase origin main
-          git push origin HEAD:main
+          git push origin HEAD:main --force
