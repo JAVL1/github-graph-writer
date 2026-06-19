@@ -26,9 +26,19 @@ This tool calculates which specific **past dates** correspond to each pixel of y
    - **intensity** — darkness of the pixels (`1`–`4`, default `4`)
 4. Click **Run workflow** and watch the magic happen ✨
 
-> ⚠️ **Important:** Make sure the repository is set as your contribution source.
-> GitHub only counts commits to **public repos** or **private repos you own** on your default branch.
 
+## ⚠️ Important setup step
+
+After creating your repo from the template, update the git identity in **both** workflow files so commits count toward your graph:
+
+`.github/workflows/write.yml` and `.github/workflows/clear.yml`
+
+```yaml
+git config user.name  "YOUR_GITHUB_USERNAME"
+git config user.email "YOUR_GITHUB_EMAIL"
+```
+> Make sure the repository is set as your contribution source.
+> GitHub only counts commits to **public repos** or **private repos you own** on your default branch.
 ---
 
 ## Local usage
@@ -86,7 +96,8 @@ To remove existing art from the graph, go to **Actions** tab → **🗑️ Clear
 
 This will delete all generated commits for that year so you can draw something new.
 
-You can also delete the whole repository
+
+In the likely event that the workflow does not wor... **You can also delete the whole repository**
 
 
 ## Contributing
